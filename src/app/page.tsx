@@ -40,7 +40,7 @@ const Index = () => {
                   <LogIn className="size-5" /> Login
                 </Button>
               </Link>
-              <Link href="/auth/signup">
+              <Link href="/auth/register">
                 <Button variant="default" size="lg" className="flex items-center gap-3 min-w-[140px]">
                   <UserPlus className="size-5" /> Sign Up
                 </Button>
