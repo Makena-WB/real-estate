@@ -5,5 +5,5 @@ import { requireAuth } from "@/lib/auth-redirect";
 export default async function Dashboard() {
   const session = await requireAuth();
 
-  return <div>Welcome {session.user?.email}</div>;
+  return <div>Welcome {session?.user?.email ?? "Guest"}</div>;
 }
