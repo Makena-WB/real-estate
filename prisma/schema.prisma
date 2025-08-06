@@ -23,7 +23,7 @@ model User {
   listings  Listing[]
   bookings  Booking[]
   accounts  Account[]
-  sessions Session[]
+  sessions  Session[]
 }
 
 model Account {
