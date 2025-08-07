@@ -12,13 +12,133 @@ export default function RegisterPage() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateName = (name: string) => {
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    return nameRegex.test(name) && name.trim().length >= 2;
+  };
+
+  const validatePassword = (password: string) => {
+    return {
+      length: password.length >= 8,
+      uppercase: /[A-Z]/.test(password),
+      lowercase: /[a-z]/.test(password),
+      number: /\d/.test(password),
+      special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+    };
+  };
+
+  const getPasswordStrength = (password: string) => {
+    const checks = validatePassword(password);
+    const score = Object.values(checks).filter(Boolean).length;
+    
+    if (score < 2) return { strength: 'weak', color: 'text-red-500', bg: 'bg-red-500' };
+    if (score < 4) return { strength: 'medium', color: 'text-yellow-500', bg: 'bg-yellow-500' };
+    return { strength: 'strong', color: 'text-green-500', bg: 'bg-green-500' };
+  };
+
+  const validateForm = () => {
+    const errors: {[key: string]: string} = {};
+    
+    if (!form.name.trim()) {
+      errors.name = "Name is required";
+    } else if (!validateName(form.name)) {
+      errors.name = "Name must be at least 2 characters and contain only letters";
+    }
+    
+    if (!form.email.trim()) {
+      errors.email = "Email is required";
+    } else if (!validateEmail(form.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+    
+    if (!form.password.trim()) {
+      errors.password = "Password is required";
+    } else {
+      const passwordChecks = validatePassword(form.password);
+      if (!passwordChecks.length) {
+        errors.password = "Password must be at least 8 characters";
+      } else if (!passwordChecks.uppercase || !passwordChecks.lowercase) {
+        errors.password = "Password must contain both uppercase and lowercase letters";
+      } else if (!passwordChecks.number) {
+        errors.password = "Password must contain at least one number";
+      }
+    }
+    
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleBlur = (field: string) => {
+    const errors = { ...validationErrors };
+    
+    if (field === 'name') {
+      if (!form.name.trim()) {
+        errors.name = "Name is required";
+      } else if (!validateName(form.name)) {
+        errors.name = "Name must be at least 2 characters and contain only letters";
+      } else {
+        delete errors.name;
+      }
+    }
+    
+    if (field === 'email') {
+      if (!form.email.trim()) {
+        errors.email = "Email is required";
+      } else if (!validateEmail(form.email)) {
+        errors.email = "Please enter a valid email address";
+      } else {
+        delete errors.email;
+      }
+    }
+    
+    if (field === 'password') {
+      if (!form.password.trim()) {
+        errors.password = "Password is required";
+      } else {
+        const passwordChecks = validatePassword(form.password);
+        if (!passwordChecks.length) {
+          errors.password = "Password must be at least 8 characters";
+        } else if (!passwordChecks.uppercase || !passwordChecks.lowercase) {
+          errors.password = "Password must contain both uppercase and lowercase letters";
+        } else if (!passwordChecks.number) {
+          errors.password = "Password must contain at least one number";
+        } else {
+          delete errors.password;
+        }
+      }
+    }
+    
+    setValidationErrors(errors);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    
+    // Clear validation error when user starts typing
+    if (validationErrors[name]) {
+      setValidationErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
     setLoading(true);
     setError("");
 
@@ -36,7 +156,6 @@ export default function RegisterPage() {
       return;
     }
 
-    // After successful signup, redirect to login
     router.push("/auth/login");
   };
 
@@ -81,9 +200,15 @@ export default function RegisterPage() {
                 placeholder="Enter your full name"
                 value={form.name}
                 onChange={handleChange}
-                className="h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50"
+                onBlur={() => handleBlur('name')}
+                className={`h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50 ${
+                  validationErrors.name ? 'border-red-300 focus:border-red-400 focus:ring-red-400' : ''
+                }`}
                 required
               />
+              {validationErrors.name && (
+                <p className="text-red-500 text-sm font-medium">{validationErrors.name}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -97,9 +222,15 @@ export default function RegisterPage() {
                 type="email"
                 value={form.email}
                 onChange={handleChange}
-                className="h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50"
+                onBlur={() => handleBlur('email')}
+                className={`h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50 ${
+                  validationErrors.email ? 'border-red-300 focus:border-red-400 focus:ring-red-400' : ''
+                }`}
                 required
               />
+              {validationErrors.email && (
+                <p className="text-red-500 text-sm font-medium">{validationErrors.email}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -113,9 +244,48 @@ export default function RegisterPage() {
                 type="password"
                 value={form.password}
                 onChange={handleChange}
-                className="h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50"
+                onBlur={() => handleBlur('password')}
+                className={`h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50 ${
+                  validationErrors.password ? 'border-red-300 focus:border-red-400 focus:ring-red-400' : ''
+                }`}
                 required
               />
+              
+              {/* Password strength indicator */}
+              {form.password && (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 bg-gray-200 rounded-full h-2">
+                      <div 
+                        className={`h-2 rounded-full transition-all duration-300 ${getPasswordStrength(form.password).bg}`}
+                        style={{ 
+                          width: `${(Object.values(validatePassword(form.password)).filter(Boolean).length / 5) * 100}%` 
+                        }}
+                      ></div>
+                    </div>
+                    <span className={`text-xs font-medium ${getPasswordStrength(form.password).color}`}>
+                      {getPasswordStrength(form.password).strength.toUpperCase()}
+                    </span>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-1 text-xs">
+                    {Object.entries(validatePassword(form.password)).map(([key, valid]) => (
+                      <div key={key} className={`flex items-center gap-1 ${valid ? 'text-green-600' : 'text-gray-400'}`}>
+                        <span className={`w-1 h-1 rounded-full ${valid ? 'bg-green-500' : 'bg-gray-300'}`}></span>
+                        {key === 'length' && '8+ characters'}
+                        {key === 'uppercase' && 'Uppercase'}
+                        {key === 'lowercase' && 'Lowercase'}
+                        {key === 'number' && 'Number'}
+                        {key === 'special' && 'Special char'}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {validationErrors.password && (
+                <p className="text-red-500 text-sm font-medium">{validationErrors.password}</p>
+              )}
             </div>
 
             {error && (
@@ -126,8 +296,8 @@ export default function RegisterPage() {
 
             <Button 
               type="submit" 
-              disabled={loading}
-              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
+              disabled={loading || Object.keys(validationErrors).length > 0}
+              className="w-full h-12 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>
