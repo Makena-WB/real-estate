@@ -94,6 +94,7 @@ export default function LoginPage() {
       email: form.email,
       password: form.password,
     });
+    console.log("signIn response:", res);
 
     if (res?.error) {
       setError("Invalid email or password");
@@ -102,7 +103,7 @@ export default function LoginPage() {
     }
 
     // Redirect to dashboard on success
-    router.push("/dashboard");
+    window.location.href = "/dashboard";
   };
 
   return (
