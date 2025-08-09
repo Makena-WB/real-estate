@@ -24,6 +24,7 @@ model User {
   bookings Booking[]
   accounts Account[]
   sessions Session[]
+  propertiesManaged Listing[] @relation("AgentProperties")
   reviews  Review[]  @relation("UserReviews")
 }
 
@@ -75,6 +76,8 @@ model Listing {
   bookings    Booking[]
   reviews     Review[]
   createdAt   DateTime  @default(now())
+  agent       User?     @relation("AgentProperties", fields: [agentId], references: [id])
+  agentId     String?
 }
 
 model Booking {
