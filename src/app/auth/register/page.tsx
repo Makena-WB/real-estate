@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", role: "USER" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
@@ -118,7 +118,7 @@ export default function RegisterPage() {
     setValidationErrors(errors);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
     
@@ -286,6 +286,24 @@ export default function RegisterPage() {
               {validationErrors.password && (
                 <p className="text-red-500 text-sm font-medium">{validationErrors.password}</p>
               )}
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="role" className="text-sm font-medium text-blue-900">
+                I am a
+              </label>
+              <select
+                id="role"
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+                required
+                className="h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50 rounded-md shadow-sm"
+              >
+                <option value="USER">Renter</option>
+                <option value="LANDLORD">Landlord</option>
+                <option value="AGENT">Agent</option>
+              </select>
             </div>
 
             {error && (

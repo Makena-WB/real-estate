@@ -90,4 +90,5 @@ enum Role {
   USER
   AGENT
   ADMIN
+  LANDLORD
 }
