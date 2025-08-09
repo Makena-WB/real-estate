@@ -3,6 +3,28 @@ import { prisma } from "./prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { NextAuthOptions } from "next-auth";
 import { compare } from "bcrypt";
+import NextAuth, { DefaultSession, DefaultUser } from "next-auth";
+
+
+declare module "next-auth" {
+  interface Session {
+    user?: {
+      id?: string;
+      role?: string;
+    } & DefaultSession["user"];
+  }
+  interface User extends DefaultUser {
+    id?: string;
+    role?: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id?: string;
+    role?: string;
+  }
+}
 
 
 export const authOptions: NextAuthOptions = {
@@ -35,21 +57,23 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   pages: {
-    signIn: "/login",
-    error: "/login",
+    signIn: "/auth/login",
+    error: "/auth/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.id = user.id;
         token.role = user.role; // Add role to JWT
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user && token.role) {
-        session.user.role = token.role as string; // Add role to session
-      }
+    if (session.user) {
+      session.user.id = token.id as string;
+      session.user.role = token.role as string;
+    }
       return session;
     },
   },
