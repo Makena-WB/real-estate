@@ -4,10 +4,10 @@ import { hash } from "bcrypt";
 
 export async function POST(request: Request) {
     try {
-  const { name, email, password } = await request.json();
+  const { name, email, password, role } = await request.json();
 
-  if (!name || !email || !password) {
-    return NextResponse.json({ error: "Name, email, and password are required" }, { status: 400 });
+  if (!name || !email || !password || !role) {
+    return NextResponse.json({ error: "Name, email, password, and role are required" }, { status: 400 });
   }
 
   const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -22,6 +22,7 @@ export async function POST(request: Request) {
       name,
       email,
       password: hashedPassword,
+      role, //Save the selected role
     },
   });
 

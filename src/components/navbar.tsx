@@ -85,7 +85,7 @@ export default function Navbar() {
                 </NavigationMenuItem>
 
                 {/* Admin Panel Link */}
-                {role === "admin" && (
+                {role === "ADMIN" && (
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>
                       <Link 
@@ -109,8 +109,12 @@ export default function Navbar() {
                       <p className="text-sm font-medium text-blue-900">
                         {user.name || 'User'}
                       </p>
-                      <p className="text-xs text-blue-600">
-                        {role === 'admin' ? 'Administrator' : 'Member'}
+                      <p className="text-xs text-blue-600 capitalize">
+                        {role === "ADMIN" && "Admin"}
+                        {role === "LANDLORD" && "Landlord"}
+                        {role === "AGENT" && "Agent"}
+                        {role === "USER" && "Renter"}
+                        {!role && "Member"}
                       </p>
                     </div>
                   </div>
