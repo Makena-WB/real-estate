@@ -25,7 +25,9 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        return user;
+        // Remove sensitive fields if needed
+        const { password, ...safeUser } = user;
+        return safeUser; // This will include 'role'
       },
     }),
   ],
@@ -40,13 +42,13 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role;
+        token.role = user.role; // Add role to JWT
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user && token.role) {
-        session.user.role = token.role;
+        session.user.role = token.role as string; // Add role to session
       }
       return session;
     },
