@@ -1,28 +1,30 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Home, UserPlus, ArrowLeft } from 'lucide-react';
-import Link from "next/link";
+import type React from "react"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Home, UserPlus, ArrowLeft, Shield, Check } from "lucide-react"
+import Link from "next/link"
 
 export default function RegisterPage() {
-  const router = useRouter();
-  const [form, setForm] = useState({ name: "", email: "", password: "", role: "USER" });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+  const router = useRouter()
+  const [form, setForm] = useState({ name: "", email: "", password: "", role: "USER" })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({})
 
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
 
   const validateName = (name: string) => {
-    const nameRegex = /^[a-zA-Z\s]+$/;
-    return nameRegex.test(name) && name.trim().length >= 2;
-  };
+    const nameRegex = /^[a-zA-Z\s]+$/
+    return nameRegex.test(name) && name.trim().length >= 2
+  }
 
   const validatePassword = (password: string) => {
     return {
@@ -30,142 +32,142 @@ export default function RegisterPage() {
       uppercase: /[A-Z]/.test(password),
       lowercase: /[a-z]/.test(password),
       number: /\d/.test(password),
-      special: /[!@#$%^&*(),.?":{}|<>]/.test(password)
-    };
-  };
+      special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    }
+  }
 
   const getPasswordStrength = (password: string) => {
-    const checks = validatePassword(password);
-    const score = Object.values(checks).filter(Boolean).length;
-    
-    if (score < 2) return { strength: 'weak', color: 'text-red-500', bg: 'bg-red-500' };
-    if (score < 4) return { strength: 'medium', color: 'text-yellow-500', bg: 'bg-yellow-500' };
-    return { strength: 'strong', color: 'text-green-500', bg: 'bg-green-500' };
-  };
+    const checks = validatePassword(password)
+    const score = Object.values(checks).filter(Boolean).length
+
+    if (score < 2) return { strength: "weak", color: "text-red-400", bg: "bg-red-500" }
+    if (score < 4) return { strength: "medium", color: "text-yellow-400", bg: "bg-yellow-500" }
+    return { strength: "strong", color: "text-green-400", bg: "bg-green-500" }
+  }
 
   const validateForm = () => {
-    const errors: {[key: string]: string} = {};
-    
+    const errors: { [key: string]: string } = {}
+
     if (!form.name.trim()) {
-      errors.name = "Name is required";
+      errors.name = "Name is required"
     } else if (!validateName(form.name)) {
-      errors.name = "Name must be at least 2 characters and contain only letters";
+      errors.name = "Name must be at least 2 characters and contain only letters"
     }
-    
+
     if (!form.email.trim()) {
-      errors.email = "Email is required";
+      errors.email = "Email is required"
     } else if (!validateEmail(form.email)) {
-      errors.email = "Please enter a valid email address";
+      errors.email = "Please enter a valid email address"
     }
-    
+
     if (!form.password.trim()) {
-      errors.password = "Password is required";
+      errors.password = "Password is required"
     } else {
-      const passwordChecks = validatePassword(form.password);
+      const passwordChecks = validatePassword(form.password)
       if (!passwordChecks.length) {
-        errors.password = "Password must be at least 8 characters";
+        errors.password = "Password must be at least 8 characters"
       } else if (!passwordChecks.uppercase || !passwordChecks.lowercase) {
-        errors.password = "Password must contain both uppercase and lowercase letters";
+        errors.password = "Password must contain both uppercase and lowercase letters"
       } else if (!passwordChecks.number) {
-        errors.password = "Password must contain at least one number";
+        errors.password = "Password must contain at least one number"
       }
     }
-    
-    setValidationErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
+
+    setValidationErrors(errors)
+    return Object.keys(errors).length === 0
+  }
 
   const handleBlur = (field: string) => {
-    const errors = { ...validationErrors };
-    
-    if (field === 'name') {
+    const errors = { ...validationErrors }
+
+    if (field === "name") {
       if (!form.name.trim()) {
-        errors.name = "Name is required";
+        errors.name = "Name is required"
       } else if (!validateName(form.name)) {
-        errors.name = "Name must be at least 2 characters and contain only letters";
+        errors.name = "Name must be at least 2 characters and contain only letters"
       } else {
-        delete errors.name;
+        delete errors.name
       }
     }
-    
-    if (field === 'email') {
+
+    if (field === "email") {
       if (!form.email.trim()) {
-        errors.email = "Email is required";
+        errors.email = "Email is required"
       } else if (!validateEmail(form.email)) {
-        errors.email = "Please enter a valid email address";
+        errors.email = "Please enter a valid email address"
       } else {
-        delete errors.email;
+        delete errors.email
       }
     }
-    
-    if (field === 'password') {
+
+    if (field === "password") {
       if (!form.password.trim()) {
-        errors.password = "Password is required";
+        errors.password = "Password is required"
       } else {
-        const passwordChecks = validatePassword(form.password);
+        const passwordChecks = validatePassword(form.password)
         if (!passwordChecks.length) {
-          errors.password = "Password must be at least 8 characters";
+          errors.password = "Password must be at least 8 characters"
         } else if (!passwordChecks.uppercase || !passwordChecks.lowercase) {
-          errors.password = "Password must contain both uppercase and lowercase letters";
+          errors.password = "Password must contain both uppercase and lowercase letters"
         } else if (!passwordChecks.number) {
-          errors.password = "Password must contain at least one number";
+          errors.password = "Password must contain at least one number"
         } else {
-          delete errors.password;
+          delete errors.password
         }
       }
     }
-    
-    setValidationErrors(errors);
-  };
+
+    setValidationErrors(errors)
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-    
+    const { name, value } = e.target
+    setForm({ ...form, [name]: value })
+
     // Clear validation error when user starts typing
     if (validationErrors[name]) {
-      setValidationErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
+      setValidationErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
     }
-  };
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
+    e.preventDefault()
+
     if (!validateForm()) {
-      return;
+      return
     }
-    
-    setLoading(true);
-    setError("");
+
+    setLoading(true)
+    setError("")
 
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
-    });
+    })
 
-    const data = await res.json();
+    const data = await res.json()
 
     if (!res.ok) {
-      setError(data.error || "Something went wrong");
-      setLoading(false);
-      return;
+      setError(data.error || "Something went wrong")
+      setLoading(false)
+      return
     }
 
-    router.push("/auth/login");
-  };
+    router.push("/auth/login")
+  }
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center p-6">
+    <section className="min-h-screen bg-gradient-to-br from-slate-800 via-slate-700 to-slate-600 flex items-center justify-center p-6">
       <div className="w-full max-w-md">
         {/* Back to home link */}
-        <Link 
-          href="/" 
-          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8 transition-colors"
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-slate-300 hover:text-slate-200 mb-8 transition-colors font-medium"
         >
           <ArrowLeft className="size-4" />
           Back to Home
@@ -173,25 +175,23 @@ export default function RegisterPage() {
 
         {/* Logo and branding */}
         <div className="text-center mb-8">
-          <div className="mx-auto flex size-16 items-center justify-center rounded-full border border-blue-200 bg-white/90 shadow-lg backdrop-blur-sm mb-4">
-            <Home className="size-8 text-blue-700" />
+          <div className="mx-auto flex size-16 items-center justify-center rounded-full border border-slate-600/50 bg-slate-800/90 shadow-lg backdrop-blur-sm mb-4">
+            <Home className="size-8 text-slate-300" />
           </div>
-          <h1 className="text-3xl font-extrabold text-blue-700 tracking-tight">
-            EstateEase
-          </h1>
-          <p className="text-blue-600 mt-2">Join thousands of satisfied users</p>
+          <h1 className="text-3xl font-extrabold text-slate-100 tracking-tight">EstateEase</h1>
+          <p className="text-slate-300 mt-2">Join thousands of satisfied users</p>
         </div>
 
         {/* Registration form */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-blue-200/50 p-8">
+        <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-600/30 p-8">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-blue-900 mb-2">Create Account</h2>
-            <p className="text-blue-600">Start your real estate journey with us</p>
+            <h2 className="text-2xl font-bold text-slate-100 mb-2">Create Account</h2>
+            <p className="text-slate-300">Start your real estate journey with us</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label htmlFor="name" className="text-sm font-medium text-blue-900">
+              <label htmlFor="name" className="text-sm font-medium text-slate-200">
                 Full Name
               </label>
               <Input
@@ -200,19 +200,17 @@ export default function RegisterPage() {
                 placeholder="Enter your full name"
                 value={form.name}
                 onChange={handleChange}
-                onBlur={() => handleBlur('name')}
-                className={`h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50 ${
-                  validationErrors.name ? 'border-red-300 focus:border-red-400 focus:ring-red-400' : ''
+                onBlur={() => handleBlur("name")}
+                className={`h-12 border-slate-600/50 focus:border-slate-500 focus:ring-slate-500/50 bg-slate-700/50 text-slate-100 placeholder:text-slate-400 ${
+                  validationErrors.name ? "border-red-400/50 focus:border-red-400 focus:ring-red-400/50" : ""
                 }`}
                 required
               />
-              {validationErrors.name && (
-                <p className="text-red-500 text-sm font-medium">{validationErrors.name}</p>
-              )}
+              {validationErrors.name && <p className="text-red-400 text-sm font-medium">{validationErrors.name}</p>}
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-blue-900">
+              <label htmlFor="email" className="text-sm font-medium text-slate-200">
                 Email Address
               </label>
               <Input
@@ -222,19 +220,17 @@ export default function RegisterPage() {
                 type="email"
                 value={form.email}
                 onChange={handleChange}
-                onBlur={() => handleBlur('email')}
-                className={`h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50 ${
-                  validationErrors.email ? 'border-red-300 focus:border-red-400 focus:ring-red-400' : ''
+                onBlur={() => handleBlur("email")}
+                className={`h-12 border-slate-600/50 focus:border-slate-500 focus:ring-slate-500/50 bg-slate-700/50 text-slate-100 placeholder:text-slate-400 ${
+                  validationErrors.email ? "border-red-400/50 focus:border-red-400 focus:ring-red-400/50" : ""
                 }`}
                 required
               />
-              {validationErrors.email && (
-                <p className="text-red-500 text-sm font-medium">{validationErrors.email}</p>
-              )}
+              {validationErrors.email && <p className="text-red-400 text-sm font-medium">{validationErrors.email}</p>}
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium text-blue-900">
+              <label htmlFor="password" className="text-sm font-medium text-slate-200">
                 Password
               </label>
               <Input
@@ -244,52 +240,60 @@ export default function RegisterPage() {
                 type="password"
                 value={form.password}
                 onChange={handleChange}
-                onBlur={() => handleBlur('password')}
-                className={`h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50 ${
-                  validationErrors.password ? 'border-red-300 focus:border-red-400 focus:ring-red-400' : ''
+                onBlur={() => handleBlur("password")}
+                className={`h-12 border-slate-600/50 focus:border-slate-500 focus:ring-slate-500/50 bg-slate-700/50 text-slate-100 placeholder:text-slate-400 ${
+                  validationErrors.password ? "border-red-400/50 focus:border-red-400 focus:ring-red-400/50" : ""
                 }`}
                 required
               />
-              
+
               {/* Password strength indicator */}
               {form.password && (
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 bg-gray-200 rounded-full h-2">
-                      <div 
+                <div className="space-y-3 p-4 bg-slate-700/30 rounded-xl border border-slate-600/20">
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 bg-slate-600/50 rounded-full h-2">
+                      <div
                         className={`h-2 rounded-full transition-all duration-300 ${getPasswordStrength(form.password).bg}`}
-                        style={{ 
-                          width: `${(Object.values(validatePassword(form.password)).filter(Boolean).length / 5) * 100}%` 
+                        style={{
+                          width: `${(Object.values(validatePassword(form.password)).filter(Boolean).length / 5) * 100}%`,
                         }}
                       ></div>
                     </div>
-                    <span className={`text-xs font-medium ${getPasswordStrength(form.password).color}`}>
+                    <span className={`text-xs font-semibold ${getPasswordStrength(form.password).color}`}>
                       {getPasswordStrength(form.password).strength.toUpperCase()}
                     </span>
                   </div>
-                  
-                  <div className="grid grid-cols-2 gap-1 text-xs">
+
+                  <div className="grid grid-cols-2 gap-2 text-xs">
                     {Object.entries(validatePassword(form.password)).map(([key, valid]) => (
-                      <div key={key} className={`flex items-center gap-1 ${valid ? 'text-green-600' : 'text-gray-400'}`}>
-                        <span className={`w-1 h-1 rounded-full ${valid ? 'bg-green-500' : 'bg-gray-300'}`}></span>
-                        {key === 'length' && '8+ characters'}
-                        {key === 'uppercase' && 'Uppercase'}
-                        {key === 'lowercase' && 'Lowercase'}
-                        {key === 'number' && 'Number'}
-                        {key === 'special' && 'Special char'}
+                      <div
+                        key={key}
+                        className={`flex items-center gap-2 ${valid ? "text-green-400" : "text-slate-400"}`}
+                      >
+                        <div
+                          className={`w-1.5 h-1.5 rounded-full ${valid ? "bg-green-400" : "bg-slate-500"} transition-colors duration-200`}
+                        ></div>
+                        <span className="font-medium">
+                          {key === "length" && "8+ characters"}
+                          {key === "uppercase" && "Uppercase"}
+                          {key === "lowercase" && "Lowercase"}
+                          {key === "number" && "Number"}
+                          {key === "special" && "Special char"}
+                        </span>
+                        {valid && <Check className="w-3 h-3 text-green-400 ml-auto" />}
                       </div>
                     ))}
                   </div>
                 </div>
               )}
-              
+
               {validationErrors.password && (
-                <p className="text-red-500 text-sm font-medium">{validationErrors.password}</p>
+                <p className="text-red-400 text-sm font-medium">{validationErrors.password}</p>
               )}
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="role" className="text-sm font-medium text-blue-900">
+              <label htmlFor="role" className="text-sm font-medium text-slate-200">
                 I am a
               </label>
               <select
@@ -298,24 +302,30 @@ export default function RegisterPage() {
                 value={form.role}
                 onChange={handleChange}
                 required
-                className="h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50 rounded-md shadow-sm"
+                className="w-full h-12 px-4 border border-slate-600/50 focus:border-slate-500 focus:ring-slate-500/50 bg-slate-700/50 text-slate-100 rounded-md shadow-sm transition-all duration-200"
               >
-                <option value="USER">Renter</option>
-                <option value="LANDLORD">Landlord</option>
-                <option value="AGENT">Agent</option>
+                <option value="USER" className="bg-slate-700 text-slate-100">
+                  Renter
+                </option>
+                <option value="LANDLORD" className="bg-slate-700 text-slate-100">
+                  Landlord
+                </option>
+                <option value="AGENT" className="bg-slate-700 text-slate-100">
+                  Agent
+                </option>
               </select>
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                <p className="text-red-600 text-sm font-medium">{error}</p>
+              <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-3">
+                <p className="text-red-300 text-sm font-medium">{error}</p>
               </div>
             )}
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={loading || Object.keys(validationErrors).length > 0}
-              className="w-full h-12 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
+              className="w-full h-12 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 disabled:from-slate-700 disabled:to-slate-800 disabled:opacity-50 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-2 border border-slate-500/30"
             >
               {loading ? (
                 <>
@@ -332,12 +342,9 @@ export default function RegisterPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-blue-600">
+            <p className="text-slate-300">
               Already have an account?{" "}
-              <Link 
-                href="/auth/login" 
-                className="font-semibold text-blue-700 hover:text-blue-800 transition-colors"
-              >
+              <Link href="/auth/login" className="font-semibold text-slate-200 hover:text-slate-100 transition-colors">
                 Sign in here
               </Link>
             </p>
@@ -346,14 +353,13 @@ export default function RegisterPage() {
 
         {/* Trust indicators */}
         <div className="text-center mt-6 space-y-2">
-          <p className="text-sm text-blue-600 font-medium opacity-80">
-            🔒 Secure registration • Your data is protected
-          </p>
-          <p className="text-xs text-blue-500 opacity-70">
-            By creating an account, you agree to our Terms of Service
-          </p>
+          <div className="flex items-center justify-center gap-2 text-sm text-slate-400 font-medium opacity-80">
+            <Shield className="w-4 h-4" />
+            <span>Secure registration • Your data is protected</span>
+          </div>
+          <p className="text-xs text-slate-500 opacity-70">By creating an account, you agree to our Terms of Service</p>
         </div>
       </div>
     </section>
-  );
+  )
 }

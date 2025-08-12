@@ -1,118 +1,120 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Home, LogIn, ArrowLeft } from 'lucide-react';
-import Link from "next/link";
+import type React from "react"
+
+import { useState } from "react"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Home, LogIn, ArrowLeft } from "lucide-react"
+import Link from "next/link"
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+  const router = useRouter()
+  const [form, setForm] = useState({ email: "", password: "" })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({})
 
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
 
   const validateForm = () => {
-    const errors: {[key: string]: string} = {};
-    
+    const errors: { [key: string]: string } = {}
+
     if (!form.email.trim()) {
-      errors.email = "Email is required";
+      errors.email = "Email is required"
     } else if (!validateEmail(form.email)) {
-      errors.email = "Please enter a valid email address";
+      errors.email = "Please enter a valid email address"
     }
-    
+
     if (!form.password.trim()) {
-      errors.password = "Password is required";
+      errors.password = "Password is required"
     } else if (form.password.length < 6) {
-      errors.password = "Password must be at least 6 characters";
+      errors.password = "Password must be at least 6 characters"
     }
-    
-    setValidationErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
+
+    setValidationErrors(errors)
+    return Object.keys(errors).length === 0
+  }
 
   const handleBlur = (field: string) => {
-    const errors = { ...validationErrors };
-    
-    if (field === 'email') {
+    const errors = { ...validationErrors }
+
+    if (field === "email") {
       if (!form.email.trim()) {
-        errors.email = "Email is required";
+        errors.email = "Email is required"
       } else if (!validateEmail(form.email)) {
-        errors.email = "Please enter a valid email address";
+        errors.email = "Please enter a valid email address"
       } else {
-        delete errors.email;
+        delete errors.email
       }
     }
-    
-    if (field === 'password') {
+
+    if (field === "password") {
       if (!form.password.trim()) {
-        errors.password = "Password is required";
+        errors.password = "Password is required"
       } else if (form.password.length < 6) {
-        errors.password = "Password must be at least 6 characters";
+        errors.password = "Password must be at least 6 characters"
       } else {
-        delete errors.password;
+        delete errors.password
       }
     }
-    
-    setValidationErrors(errors);
-  };
+
+    setValidationErrors(errors)
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-    
+    const { name, value } = e.target
+    setForm({ ...form, [name]: value })
+
     // Clear validation error when user starts typing
     if (validationErrors[name]) {
-      setValidationErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
+      setValidationErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
     }
-  };
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
+    e.preventDefault()
+
     if (!validateForm()) {
-      return;
+      return
     }
-    
-    setLoading(true);
-    setError("");
+
+    setLoading(true)
+    setError("")
 
     const res = await signIn("credentials", {
       redirect: false,
       email: form.email,
       password: form.password,
-    });
-    console.log("signIn response:", res);
+    })
+    console.log("signIn response:", res)
 
     if (res?.error) {
-      setError("Invalid email or password");
-      setLoading(false);
-      return;
+      setError("Invalid email or password")
+      setLoading(false)
+      return
     }
 
     // Redirect to dashboard on success
-    window.location.href = "/dashboard";
-  };
+    window.location.href = "/dashboard"
+  }
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center p-6">
+    <section className="min-h-screen bg-gradient-to-br from-slate-800 via-slate-700 to-slate-600 flex items-center justify-center p-6">
       <div className="w-full max-w-md">
         {/* Back to home link */}
-        <Link 
-          href="/" 
-          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8 transition-colors"
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-slate-300 hover:text-slate-200 mb-8 transition-colors font-medium"
         >
           <ArrowLeft className="size-4" />
           Back to Home
@@ -120,25 +122,23 @@ export default function LoginPage() {
 
         {/* Logo and branding */}
         <div className="text-center mb-8">
-          <div className="mx-auto flex size-16 items-center justify-center rounded-full border border-blue-200 bg-white/90 shadow-lg backdrop-blur-sm mb-4">
-            <Home className="size-8 text-blue-700" />
+          <div className="mx-auto flex size-16 items-center justify-center rounded-full border border-slate-600/50 bg-slate-800/90 shadow-lg backdrop-blur-sm mb-4">
+            <Home className="size-8 text-slate-300" />
           </div>
-          <h1 className="text-3xl font-extrabold text-blue-700 tracking-tight">
-            EstateEase
-          </h1>
-          <p className="text-blue-600 mt-2">Welcome back to your account</p>
+          <h1 className="text-3xl font-extrabold text-slate-100 tracking-tight">EstateEase</h1>
+          <p className="text-slate-300 mt-2">Welcome back to your account</p>
         </div>
 
         {/* Login form */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-blue-200/50 p-8">
+        <div className="bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-600/30 p-8">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-blue-900 mb-2">Sign In</h2>
-            <p className="text-blue-600">Enter your credentials to access your dashboard</p>
+            <h2 className="text-2xl font-bold text-slate-100 mb-2">Sign In</h2>
+            <p className="text-slate-300">Enter your credentials to access your dashboard</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-blue-900">
+              <label htmlFor="email" className="text-sm font-medium text-slate-200">
                 Email Address
               </label>
               <Input
@@ -148,19 +148,17 @@ export default function LoginPage() {
                 type="email"
                 value={form.email}
                 onChange={handleChange}
-                onBlur={() => handleBlur('email')}
-                className={`h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50 ${
-                  validationErrors.email ? 'border-red-300 focus:border-red-400 focus:ring-red-400' : ''
+                onBlur={() => handleBlur("email")}
+                className={`h-12 border-slate-600/50 focus:border-slate-500 focus:ring-slate-500/50 bg-slate-700/50 text-slate-100 placeholder:text-slate-400 ${
+                  validationErrors.email ? "border-red-400/50 focus:border-red-400 focus:ring-red-400/50" : ""
                 }`}
                 required
               />
-              {validationErrors.email && (
-                <p className="text-red-500 text-sm font-medium">{validationErrors.email}</p>
-              )}
+              {validationErrors.email && <p className="text-red-400 text-sm font-medium">{validationErrors.email}</p>}
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium text-blue-900">
+              <label htmlFor="password" className="text-sm font-medium text-slate-200">
                 Password
               </label>
               <Input
@@ -170,27 +168,27 @@ export default function LoginPage() {
                 type="password"
                 value={form.password}
                 onChange={handleChange}
-                onBlur={() => handleBlur('password')}
-                className={`h-12 border-blue-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50 ${
-                  validationErrors.password ? 'border-red-300 focus:border-red-400 focus:ring-red-400' : ''
+                onBlur={() => handleBlur("password")}
+                className={`h-12 border-slate-600/50 focus:border-slate-500 focus:ring-slate-500/50 bg-slate-700/50 text-slate-100 placeholder:text-slate-400 ${
+                  validationErrors.password ? "border-red-400/50 focus:border-red-400 focus:ring-red-400/50" : ""
                 }`}
                 required
               />
               {validationErrors.password && (
-                <p className="text-red-500 text-sm font-medium">{validationErrors.password}</p>
+                <p className="text-red-400 text-sm font-medium">{validationErrors.password}</p>
               )}
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                <p className="text-red-600 text-sm font-medium">{error}</p>
+              <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-3">
+                <p className="text-red-300 text-sm font-medium">{error}</p>
               </div>
             )}
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={loading || Object.keys(validationErrors).length > 0}
-              className="w-full h-12 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
+              className="w-full h-12 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 disabled:from-slate-700 disabled:to-slate-800 disabled:opacity-50 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 flex items-center justify-center gap-2 border border-slate-500/30"
             >
               {loading ? (
                 <>
@@ -207,11 +205,11 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-blue-600">
+            <p className="text-slate-300">
               {"Don't have an account? "}
-              <Link 
-                href="/auth/register" 
-                className="font-semibold text-blue-700 hover:text-blue-800 transition-colors"
+              <Link
+                href="/auth/register"
+                className="font-semibold text-slate-200 hover:text-slate-100 transition-colors"
               >
                 Create one here
               </Link>
@@ -221,11 +219,9 @@ export default function LoginPage() {
 
         {/* Trust indicator */}
         <div className="text-center mt-6">
-          <p className="text-sm text-blue-600 font-medium opacity-80">
-            Secure login • Trusted by thousands of users
-          </p>
+          <p className="text-sm text-slate-400 font-medium opacity-80">Secure login • Trusted by thousands of users</p>
         </div>
       </div>
     </section>
-  );
+  )
 }
