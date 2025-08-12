@@ -216,36 +216,36 @@ export default function PropertyForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-800 via-slate-700 to-slate-600 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg mb-6">
-            <Home className="w-10 h-10 text-white" />
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-slate-600 to-slate-700 shadow-lg mb-6 border border-slate-500/30">
+            <Home className="w-10 h-10 text-slate-200" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-blue-700 mb-4">Add New Property</h1>
-          <p className="text-blue-600 text-lg max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-100 mb-4">Add New Property</h1>
+          <p className="text-slate-300 text-lg max-w-2xl mx-auto">
             Create a stunning property listing with rich descriptions and beautiful imagery
           </p>
         </div>
 
         {/* Form Progress Bar */}
-        <div className="mb-8 bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-blue-200/50">
+        <div className="mb-8 bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-slate-600/30">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-lg font-semibold text-blue-800">Form Completion</span>
-            <span className="text-lg font-bold text-blue-700">{Math.round(formProgress)}%</span>
+            <span className="text-lg font-semibold text-slate-200">Form Completion</span>
+            <span className="text-lg font-bold text-slate-100">{Math.round(formProgress)}%</span>
           </div>
-          <div className="w-full bg-blue-100 rounded-full h-4 overflow-hidden">
+          <div className="w-full bg-slate-700 rounded-full h-4 overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-full transition-all duration-500 ease-out relative overflow-hidden"
+              className="h-full bg-gradient-to-r from-slate-500 via-slate-400 to-slate-300 rounded-full transition-all duration-500 ease-out relative overflow-hidden"
               style={{ width: `${formProgress}%` }}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 animate-pulse"></div>
             </div>
           </div>
-          <div className="mt-3 text-sm text-blue-600">
+          <div className="mt-3 text-sm text-slate-300">
             {formProgress === 100 ? (
-              <span className="font-medium text-green-600">✓ All fields completed! Ready to submit.</span>
+              <span className="font-medium text-green-400">✓ All fields completed! Ready to submit.</span>
             ) : (
               <span>Complete all fields to submit your property listing</span>
             )}
@@ -254,18 +254,18 @@ export default function PropertyForm() {
 
         <form
           onSubmit={handleSubmit}
-          className="bg-white/90 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-2xl border border-blue-200/50 space-y-8"
+          className="bg-slate-800/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-2xl border border-slate-600/30 space-y-8"
         >
           {/* Validation Errors */}
           {validationErrors.length > 0 && (
-            <div className="p-6 rounded-2xl bg-red-50 border-2 border-red-200 space-y-3">
-              <div className="flex items-center gap-3 text-red-700 font-semibold text-lg">
+            <div className="p-6 rounded-2xl bg-red-500/20 border-2 border-red-500/30 space-y-3">
+              <div className="flex items-center gap-3 text-red-400 font-semibold text-lg">
                 <AlertCircle className="w-6 h-6" />
                 Please fix the following errors:
               </div>
               <ul className="space-y-2 ml-9">
                 {validationErrors.map((error, index) => (
-                  <li key={index} className="text-red-600 font-medium">
+                  <li key={index} className="text-red-300 font-medium">
                     • {error}
                   </li>
                 ))}
@@ -275,10 +275,10 @@ export default function PropertyForm() {
 
           {/* Property Title */}
           <div className="space-y-3">
-            <label htmlFor="title" className="flex items-center gap-2 text-lg font-semibold text-blue-800">
+            <label htmlFor="title" className="flex items-center gap-2 text-lg font-semibold text-slate-200">
               <Type className="w-5 h-5" />
               Property Title
-              {form.title.trim() && <span className="text-green-600 text-sm">✓</span>}
+              {form.title.trim() && <span className="text-green-400 text-sm">✓</span>}
             </label>
             <input
               id="title"
@@ -288,68 +288,68 @@ export default function PropertyForm() {
               onChange={handleChange}
               required
               placeholder="Enter an attractive property title..."
-              className={`w-full h-14 px-6 rounded-2xl border-2 focus:ring-4 focus:ring-blue-100 bg-white/80 backdrop-blur-sm shadow-sm text-lg transition-all duration-300 placeholder:text-blue-400 ${
+              className={`w-full h-14 px-6 rounded-2xl border-2 focus:ring-4 focus:ring-slate-500/50 bg-slate-700/50 backdrop-blur-sm shadow-sm text-lg transition-all duration-300 placeholder:text-slate-400 text-slate-100 ${
                 validationErrors.some((error) => error.includes("title"))
-                  ? "border-red-300 focus:border-red-400"
+                  ? "border-red-400/50 focus:border-red-400"
                   : form.title.trim()
-                    ? "border-green-300 focus:border-green-400"
-                    : "border-blue-200/60 focus:border-blue-400"
+                    ? "border-green-400/50 focus:border-green-400"
+                    : "border-slate-600/50 focus:border-slate-500"
               }`}
             />
           </div>
 
           {/* Rich Text Description */}
           <div className="space-y-3">
-            <label className="flex items-center gap-2 text-lg font-semibold text-blue-800">
+            <label className="flex items-center gap-2 text-lg font-semibold text-slate-200">
               <Type className="w-5 h-5" />
               Property Description
               {form.description.trim() && form.description !== "<br>" && (
-                <span className="text-green-600 text-sm">✓</span>
+                <span className="text-green-400 text-sm">✓</span>
               )}
             </label>
 
             {/* Rich Text Toolbar */}
-            <div className="flex flex-wrap gap-2 p-4 bg-blue-50/80 rounded-2xl border border-blue-200/60">
+            <div className="flex flex-wrap gap-2 p-4 bg-slate-700/50 rounded-2xl border border-slate-600/30">
               <button
                 type="button"
                 onClick={() => formatText("bold")}
-                className="p-2 rounded-lg bg-white/80 hover:bg-blue-100 border border-blue-200/60 transition-all duration-200 hover:shadow-md"
+                className="p-2 rounded-lg bg-slate-600/50 hover:bg-slate-600 border border-slate-500/30 transition-all duration-200 hover:shadow-md"
                 title="Bold"
               >
-                <Bold className="w-4 h-4 text-blue-700" />
+                <Bold className="w-4 h-4 text-slate-300" />
               </button>
               <button
                 type="button"
                 onClick={() => formatText("italic")}
-                className="p-2 rounded-lg bg-white/80 hover:bg-blue-100 border border-blue-200/60 transition-all duration-200 hover:shadow-md"
+                className="p-2 rounded-lg bg-slate-600/50 hover:bg-slate-600 border border-slate-500/30 transition-all duration-200 hover:shadow-md"
                 title="Italic"
               >
-                <Italic className="w-4 h-4 text-blue-700" />
+                <Italic className="w-4 h-4 text-slate-300" />
               </button>
               <button
                 type="button"
                 onClick={() => formatText("underline")}
-                className="p-2 rounded-lg bg-white/80 hover:bg-blue-100 border border-blue-200/60 transition-all duration-200 hover:shadow-md"
+                className="p-2 rounded-lg bg-slate-600/50 hover:bg-slate-600 border border-slate-500/30 transition-all duration-200 hover:shadow-md"
                 title="Underline"
               >
-                <Underline className="w-4 h-4 text-blue-700" />
+                <Underline className="w-4 h-4 text-slate-300" />
               </button>
-              <div className="w-px h-8 bg-blue-200 mx-1"></div>
+              <div className="w-px h-8 bg-slate-500 mx-1"></div>
               <button
                 type="button"
                 onClick={() => formatText("insertUnorderedList")}
-                className="p-2 rounded-lg bg-white/80 hover:bg-blue-100 border border-blue-200/60 transition-all duration-200 hover:shadow-md"
+                className="p-2 rounded-lg bg-slate-600/50 hover:bg-slate-600 border border-slate-500/30 transition-all duration-200 hover:shadow-md"
                 title="Bullet List"
               >
-                <List className="w-4 h-4 text-blue-700" />
+                <List className="w-4 h-4 text-slate-300" />
               </button>
               <button
                 type="button"
                 onClick={() => formatText("insertOrderedList")}
-                className="p-2 rounded-lg bg-white/80 hover:bg-blue-100 border border-blue-200/60 transition-all duration-200 hover:shadow-md"
+                className="p-2 rounded-lg bg-slate-600/50 hover:bg-slate-600 border border-slate-500/30 transition-all duration-200 hover:shadow-md"
                 title="Numbered List"
               >
-                <ListOrdered className="w-4 h-4 text-blue-700" />
+                <ListOrdered className="w-4 h-4 text-slate-300" />
               </button>
             </div>
 
@@ -358,12 +358,12 @@ export default function PropertyForm() {
               ref={descriptionRef}
               contentEditable
               onInput={handleDescriptionChange}
-              className={`w-full min-h-[120px] p-6 rounded-2xl border-2 focus:ring-4 focus:ring-blue-100 bg-white/80 backdrop-blur-sm shadow-sm text-lg transition-all duration-300 focus:outline-none ${
+              className={`w-full min-h-[120px] p-6 rounded-2xl border-2 focus:ring-4 focus:ring-slate-500/50 bg-slate-700/50 backdrop-blur-sm shadow-sm text-lg transition-all duration-300 focus:outline-none text-slate-100 ${
                 validationErrors.some((error) => error.includes("description"))
-                  ? "border-red-300 focus:border-red-400"
+                  ? "border-red-400/50 focus:border-red-400"
                   : form.description.trim() && form.description !== "<br>"
-                    ? "border-green-300 focus:border-green-400"
-                    : "border-blue-200/60 focus:border-blue-400"
+                    ? "border-green-400/50 focus:border-green-400"
+                    : "border-slate-600/50 focus:border-slate-500"
               }`}
               style={{ whiteSpace: "pre-wrap" }}
               data-placeholder="Describe your property in detail... Use the toolbar above to format your text."
@@ -373,10 +373,10 @@ export default function PropertyForm() {
           {/* Price and Location Row */}
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-3">
-              <label htmlFor="price" className="flex items-center gap-2 text-lg font-semibold text-blue-800">
+              <label htmlFor="price" className="flex items-center gap-2 text-lg font-semibold text-slate-200">
                 <DollarSign className="w-5 h-5" />
                 Price (KES)
-                {form.price && Number.parseFloat(form.price) > 0 && <span className="text-green-600 text-sm">✓</span>}
+                {form.price && Number.parseFloat(form.price) > 0 && <span className="text-green-400 text-sm">✓</span>}
               </label>
               <input
                 id="price"
@@ -387,20 +387,20 @@ export default function PropertyForm() {
                 onChange={handleChange}
                 required
                 placeholder="0"
-                className={`w-full h-14 px-6 rounded-2xl border-2 focus:ring-4 focus:ring-blue-100 bg-white/80 backdrop-blur-sm shadow-sm text-lg transition-all duration-300 placeholder:text-blue-400 ${
+                className={`w-full h-14 px-6 rounded-2xl border-2 focus:ring-4 focus:ring-slate-500/50 bg-slate-700/50 backdrop-blur-sm shadow-sm text-lg transition-all duration-300 placeholder:text-slate-400 text-slate-100 ${
                   validationErrors.some((error) => error.includes("price"))
-                    ? "border-red-300 focus:border-red-400"
+                    ? "border-red-400/50 focus:border-red-400"
                     : form.price && Number.parseFloat(form.price) > 0
-                      ? "border-green-300 focus:border-green-400"
-                      : "border-blue-200/60 focus:border-blue-400"
+                      ? "border-green-400/50 focus:border-green-400"
+                      : "border-slate-600/50 focus:border-slate-500"
                 }`}
               />
             </div>
             <div className="space-y-3">
-              <label htmlFor="location" className="flex items-center gap-2 text-lg font-semibold text-blue-800">
+              <label htmlFor="location" className="flex items-center gap-2 text-lg font-semibold text-slate-200">
                 <MapPin className="w-5 h-5" />
                 Location
-                {form.location.trim() && <span className="text-green-600 text-sm">✓</span>}
+                {form.location.trim() && <span className="text-green-400 text-sm">✓</span>}
               </label>
               <input
                 id="location"
@@ -410,12 +410,12 @@ export default function PropertyForm() {
                 onChange={handleChange}
                 required
                 placeholder="Enter property location..."
-                className={`w-full h-14 px-6 rounded-2xl border-2 focus:ring-4 focus:ring-blue-100 bg-white/80 backdrop-blur-sm shadow-sm text-lg transition-all duration-300 placeholder:text-blue-400 ${
+                className={`w-full h-14 px-6 rounded-2xl border-2 focus:ring-4 focus:ring-slate-500/50 bg-slate-700/50 backdrop-blur-sm shadow-sm text-lg transition-all duration-300 placeholder:text-slate-400 text-slate-100 ${
                   validationErrors.some((error) => error.includes("Location"))
-                    ? "border-red-300 focus:border-red-400"
+                    ? "border-red-400/50 focus:border-red-400"
                     : form.location.trim()
-                      ? "border-green-300 focus:border-green-400"
-                      : "border-blue-200/60 focus:border-blue-400"
+                      ? "border-green-400/50 focus:border-green-400"
+                      : "border-slate-600/50 focus:border-slate-500"
                 }`}
               />
             </div>
@@ -423,10 +423,10 @@ export default function PropertyForm() {
 
           {/* Landlord Selection */}
           <div className="space-y-3">
-            <label htmlFor="ownerId" className="flex items-center gap-2 text-lg font-semibold text-blue-800">
+            <label htmlFor="ownerId" className="flex items-center gap-2 text-lg font-semibold text-slate-200">
               <User className="w-5 h-5" />
               Select Landlord
-              {form.ownerId && <span className="text-green-600 text-sm">✓</span>}
+              {form.ownerId && <span className="text-green-400 text-sm">✓</span>}
             </label>
             <select
               id="ownerId"
@@ -434,17 +434,19 @@ export default function PropertyForm() {
               value={form.ownerId}
               onChange={handleChange}
               required
-              className={`w-full h-14 px-6 rounded-2xl border-2 focus:ring-4 focus:ring-blue-100 bg-white/80 backdrop-blur-sm shadow-sm text-lg transition-all duration-300 ${
+              className={`w-full h-14 px-6 rounded-2xl border-2 focus:ring-4 focus:ring-slate-500/50 bg-slate-700/50 backdrop-blur-sm shadow-sm text-lg transition-all duration-300 text-slate-100 ${
                 validationErrors.some((error) => error.includes("landlord"))
-                  ? "border-red-300 focus:border-red-400"
+                  ? "border-red-400/50 focus:border-red-400"
                   : form.ownerId
-                    ? "border-green-300 focus:border-green-400"
-                    : "border-blue-200/60 focus:border-blue-400"
+                    ? "border-green-400/50 focus:border-green-400"
+                    : "border-slate-600/50 focus:border-slate-500"
               }`}
             >
-              <option value="">-- Select Landlord --</option>
+              <option value="" className="bg-slate-700 text-slate-300">
+                -- Select Landlord --
+              </option>
               {landlords.map((landlord) => (
-                <option key={landlord.id} value={landlord.id}>
+                <option key={landlord.id} value={landlord.id} className="bg-slate-700 text-slate-100">
                   {landlord.name || landlord.email}
                 </option>
               ))}
@@ -453,10 +455,10 @@ export default function PropertyForm() {
 
           {/* Image Upload */}
           <div className="space-y-3">
-            <label htmlFor="images" className="flex items-center gap-2 text-lg font-semibold text-blue-800">
+            <label htmlFor="images" className="flex items-center gap-2 text-lg font-semibold text-slate-200">
               <Upload className="w-5 h-5" />
               Upload Images
-              {form.images && <span className="text-green-600 text-sm">✓</span>}
+              {form.images && <span className="text-green-400 text-sm">✓</span>}
             </label>
             <div className="relative">
               <input
@@ -470,14 +472,14 @@ export default function PropertyForm() {
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 disabled:cursor-not-allowed"
               />
               <div
-                className={`w-full h-14 px-6 rounded-2xl border-2 border-dashed bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300 hover:border-blue-400 hover:bg-blue-50/50 flex items-center justify-center gap-3 text-blue-600 font-medium ${
+                className={`w-full h-14 px-6 rounded-2xl border-2 border-dashed bg-slate-700/50 backdrop-blur-sm shadow-sm transition-all duration-300 hover:border-slate-500 hover:bg-slate-600/50 flex items-center justify-center gap-3 text-slate-300 font-medium ${
                   uploading ? "cursor-not-allowed opacity-50" : "cursor-pointer"
                 } ${
                   validationErrors.some((error) => error.includes("image"))
-                    ? "border-red-300/80"
+                    ? "border-red-400/50"
                     : form.images
-                      ? "border-green-300/80"
-                      : "border-blue-300/80"
+                      ? "border-green-400/50"
+                      : "border-slate-600/50"
                 }`}
               >
                 <Upload className="w-5 h-5" />
@@ -486,8 +488,8 @@ export default function PropertyForm() {
             </div>
 
             {uploading && (
-              <div className="flex items-center gap-2 text-blue-600 font-medium">
-                <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+              <div className="flex items-center gap-2 text-slate-300 font-medium">
+                <div className="w-4 h-4 border-2 border-slate-300 border-t-transparent rounded-full animate-spin"></div>
                 Uploading images...
               </div>
             )}
@@ -499,9 +501,9 @@ export default function PropertyForm() {
                     <img
                       src={url || "/placeholder.svg"}
                       alt={`Property image ${idx + 1}`}
-                      className="w-full h-20 object-cover rounded-xl border-2 border-blue-200/60 shadow-sm group-hover:shadow-md transition-all duration-200"
+                      className="w-full h-20 object-cover rounded-xl border-2 border-slate-600/50 shadow-sm group-hover:shadow-md transition-all duration-200"
                     />
-                    <div className="absolute inset-0 bg-blue-600/20 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-200"></div>
+                    <div className="absolute inset-0 bg-slate-600/20 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-200"></div>
                     <button
                       type="button"
                       onClick={() => handleImageDelete(idx)}
@@ -518,10 +520,12 @@ export default function PropertyForm() {
 
           {/* Error and Success Messages */}
           {error && (
-            <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 font-medium">{error}</div>
+            <div className="p-4 rounded-2xl bg-red-500/20 border border-red-500/30 text-red-300 font-medium">
+              {error}
+            </div>
           )}
           {success && (
-            <div className="p-4 rounded-2xl bg-green-50 border border-green-200 text-green-700 font-medium">
+            <div className="p-4 rounded-2xl bg-green-500/20 border border-green-500/30 text-green-300 font-medium">
               Property added successfully!
             </div>
           )}
@@ -530,7 +534,7 @@ export default function PropertyForm() {
           <button
             type="submit"
             disabled={loading || uploading || formProgress < 100}
-            className="group relative w-full h-16 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white text-xl font-semibold shadow-lg hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 ease-out disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+            className="group relative w-full h-16 rounded-2xl bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 text-white text-xl font-semibold shadow-lg hover:shadow-2xl hover:shadow-slate-500/25 transition-all duration-300 ease-out disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden border border-slate-500/30"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
@@ -559,7 +563,7 @@ export default function PropertyForm() {
       <style jsx>{`
         [contenteditable]:empty:before {
           content: attr(data-placeholder);
-          color: #93c5fd;
+          color: #94a3b8;
           font-style: italic;
         }
       `}</style>
