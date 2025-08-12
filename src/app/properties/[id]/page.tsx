@@ -2,7 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Star, MapPin, DollarSign, User, Home } from "lucide-react";
 
-export default async function PropertyDetailPage({ params }: { params: { id: string } }) {
+export default async function PropertyDetailPage(context: { params: { id: string } }) {
+  const { params } = await context;
   type PropertyType = {
     id: string;
     title: string;
@@ -126,3 +127,5 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
     </div>
   );
 }
+
+// Dynamic amenities

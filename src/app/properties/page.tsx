@@ -2,6 +2,9 @@ import { prisma } from "@/lib/prisma"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { MapPin, DollarSign, User, Star, Home, Eye, Heart } from "lucide-react"
 import Link from "next/link"
+import { FavoriteButton } from "@/components/FavoriteButton"
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export default async function PropertiesPage() {
   type ListingWithRelations = {
@@ -14,6 +17,17 @@ export default async function PropertiesPage() {
     agent?: { name?: string | null; email?: string | null } | null
     owner?: { name?: string | null; email?: string | null } | null
     reviews: any[]
+  }
+
+  const session = await getServerSession(authOptions);
+  let userFavoriteIds: string[] = [];
+
+  if (session?.user?.id) {
+    const favorites = await prisma.favorite.findMany({
+      where: { userId: session.user.id },
+      select: { listingId: true },
+    });
+    userFavoriteIds = favorites.map(fav => fav.listingId);
   }
 
   const listings: ListingWithRelations[] = await prisma.listing.findMany({
@@ -99,9 +113,10 @@ export default async function PropertiesPage() {
 
                       {/* Action Buttons */}
                       <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                        <button className="p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-colors duration-200">
-                          <Heart className="w-4 h-4 text-blue-600" />
-                        </button>
+                        <FavoriteButton
+                          listingId={listing.id}
+                          isFavorited={userFavoriteIds.includes(listing.id)}
+                        />
                         <Link href={`/properties/${listing.id}`}>
                           <button
                             className="p-2 bg-white/90 rounded-full shadow-lg hover:bg-white transition-colors duration-200"
