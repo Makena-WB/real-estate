@@ -211,9 +211,11 @@ export default async function Dashboard() {
               </div>
             </div>
             <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
-              <button className="px-4 sm:px-6 py-2.5 sm:py-3 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 text-slate-200 font-semibold rounded-lg sm:rounded-xl transition-all duration-200 hover:shadow-lg text-sm sm:text-base">
-                Edit Profile
-              </button>
+              <Link href="/dashboard/settings" passHref legacyBehavior>
+                <button className="px-4 sm:px-6 py-2.5 sm:py-3 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 text-slate-200 font-semibold rounded-lg sm:rounded-xl transition-all duration-200 hover:shadow-lg text-sm sm:text-base">
+                  Edit Profile
+                </button>
+              </Link>
               <LogoutButton />
             </div>
           </div>
