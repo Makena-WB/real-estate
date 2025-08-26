@@ -1,6 +1,7 @@
 import { requireAuth } from "@/lib/auth-redirect"
 import LogoutButton from "@/components/ui/logout-button"
 import { User, Home, Heart, Settings, BarChart3, FileText } from "lucide-react"
+import Link from "next/link"
 
 export default async function Dashboard() {
   const session = await requireAuth()
@@ -122,58 +123,6 @@ export default async function Dashboard() {
                   </button>
                 </div>
               </div>
-
-              {/* Analytics Card */}
-              <div className="group bg-slate-800/80 backdrop-blur-sm border border-slate-600/30 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 sm:hover:-translate-y-2 overflow-hidden rounded-2xl sm:rounded-3xl hover:border-slate-500/50 p-6 sm:p-8">
-                <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-slate-300" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-lg sm:text-xl font-bold text-slate-100 truncate">Analytics</h3>
-                    <p className="text-slate-400 text-xs sm:text-sm">Performance insights</p>
-                  </div>
-                </div>
-                <div className="space-y-3 sm:space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300 text-sm sm:text-base">This Month</span>
-                    <span className="text-xl sm:text-2xl font-bold text-green-400">+24%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300 text-sm sm:text-base">Inquiries</span>
-                    <span className="text-xl sm:text-2xl font-bold text-slate-100">47</span>
-                  </div>
-                  <button className="w-full mt-4 sm:mt-6 px-4 py-2.5 sm:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-lg sm:rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30 text-sm sm:text-base">
-                    View Analytics
-                  </button>
-                </div>
-              </div>
-
-              {/* Received Applications Card - only for agents/landlords */}
-              <div className="group bg-slate-800/80 backdrop-blur-sm border border-slate-600/30 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 sm:hover:-translate-y-2 overflow-hidden rounded-2xl sm:rounded-3xl hover:border-slate-500/50 p-6 sm:p-8">
-                <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-lg sm:text-xl font-bold text-slate-100 truncate">Applications</h3>
-                    <p className="text-slate-400 text-xs sm:text-sm">Received from renters</p>
-                  </div>
-                </div>
-                <div className="space-y-3 sm:space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300 text-sm sm:text-base">New Applications</span>
-                    <span className="text-xl sm:text-2xl font-bold text-blue-400">5</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-300 text-sm sm:text-base">Total Received</span>
-                    <span className="text-xl sm:text-2xl font-bold text-slate-100">23</span>
-                  </div>
-                  <button className="w-full mt-4 sm:mt-6 px-4 py-2.5 sm:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-lg sm:rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30 text-sm sm:text-base">
-                    Review Applications
-                  </button>
-                </div>
-              </div>
             </>
           )}
         </div>
@@ -200,11 +149,13 @@ export default async function Dashboard() {
                   <div className="text-slate-200 font-semibold text-sm sm:text-base">Applications</div>
                   <div className="text-slate-400 text-xs sm:text-sm">Sent to agents</div>
                 </button>
-                <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group xs:col-span-2 lg:col-span-1">
-                  <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
-                  <div className="text-slate-200 font-semibold text-sm sm:text-base">Settings</div>
-                  <div className="text-slate-400 text-xs sm:text-sm">Manage account</div>
-                </button>
+                <Link href="/dashboard/settings" passHref legacyBehavior>
+                  <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group xs:col-span-2 lg:col-span-1 w-full text-left flex flex-col items-center">
+                    <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
+                    <div className="text-slate-200 font-semibold text-sm sm:text-base">Settings</div>
+                    <div className="text-slate-400 text-xs sm:text-sm">Manage account</div>
+                  </button>
+                </Link>
               </>
             )}
             {/* Agents/Landlords: Only show relevant actions */}
@@ -230,11 +181,13 @@ export default async function Dashboard() {
                   <div className="text-slate-200 font-semibold text-sm sm:text-base">Analytics</div>
                   <div className="text-slate-400 text-xs sm:text-sm">View performance reports</div>
                 </button>
-                <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
-                  <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
-                  <div className="text-slate-200 font-semibold text-sm sm:text-base">Settings</div>
-                  <div className="text-slate-400 text-xs sm:text-sm">Manage account</div>
-                </button>
+                <Link href="/dashboard/settings" passHref legacyBehavior>
+                  <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center">
+                    <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
+                    <div className="text-slate-200 font-semibold text-sm sm:text-base">Settings</div>
+                    <div className="text-slate-400 text-xs sm:text-sm">Manage account</div>
+                  </button>
+                </Link>
               </>
             )}
           </div>
