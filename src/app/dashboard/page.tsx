@@ -161,11 +161,13 @@ export default async function Dashboard() {
             {/* Agents/Landlords: Only show relevant actions */}
             {role && ["AGENT", "LANDLORD"].includes(role) && (
               <>
-                <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
-                  <Home className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
-                  <div className="text-slate-200 font-semibold text-sm sm:text-base">Add Property</div>
-                  <div className="text-slate-400 text-xs sm:text-sm">Create new listing</div>
-                </button>
+                <Link href="/properties/add" passHref legacyBehavior>
+                  <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center">
+                    <Home className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
+                    <div className="text-slate-200 font-semibold text-sm sm:text-base">Add Property</div>
+                    <div className="text-slate-400 text-xs sm:text-sm">Create new listing</div>
+                  </button>
+                </Link>
                 <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
                   <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
                   <div className="text-slate-200 font-semibold text-sm sm:text-base">Manage Listings</div>
