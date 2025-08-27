@@ -65,9 +65,11 @@ export default async function Dashboard() {
                 <span className="text-slate-300 text-sm sm:text-base">Saved Properties</span>
                 <span className="text-xl sm:text-2xl font-bold text-slate-100">8</span>
               </div>
-              <button className="w-full mt-4 sm:mt-6 px-4 py-2.5 sm:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-lg sm:rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30 text-sm sm:text-base">
-                View Favorites
-              </button>
+              <Link href="/favorites">
+                <button className="w-full mt-4 sm:mt-6 px-4 py-2.5 sm:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-lg sm:rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30 text-sm sm:text-base">
+                  View Favorites
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -118,9 +120,11 @@ export default async function Dashboard() {
                     <span className="text-slate-300 text-sm sm:text-base">Total Views</span>
                     <span className="text-xl sm:text-2xl font-bold text-slate-100">1,247</span>
                   </div>
-                  <button className="w-full mt-4 sm:mt-6 px-4 py-2.5 sm:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-lg sm:rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30 text-sm sm:text-base">
-                    View Properties
-                  </button>
+                  <Link href="/properties">
+                    <button className="w-full mt-4 sm:mt-6 px-4 py-2.5 sm:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-lg sm:rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30 text-sm sm:text-base">
+                      View Properties
+                    </button>
+                  </Link>
                 </div>
               </div>
             </>
@@ -134,21 +138,27 @@ export default async function Dashboard() {
             {/* Renters: Only show relevant actions */}
             {role === "USER" && (
               <>
+              <Link href="/properties">
                 <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
                   <Home className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
                   <div className="text-slate-200 font-semibold text-sm sm:text-base">Browse Properties</div>
                   <div className="text-slate-400 text-xs sm:text-sm">Find your dream home</div>
                 </button>
+              </Link>
+              <Link href="/favorites">
                 <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
                   <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
                   <div className="text-slate-200 font-semibold text-sm sm:text-base">View Favorites</div>
                   <div className="text-slate-400 text-xs sm:text-sm">Saved properties</div>
                 </button>
+              </Link>
+              <Link href="/applications">
                 <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
                   <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
                   <div className="text-slate-200 font-semibold text-sm sm:text-base">Applications</div>
                   <div className="text-slate-400 text-xs sm:text-sm">Sent to agents</div>
                 </button>
+              </Link>
                 <Link href="/dashboard/settings" passHref legacyBehavior>
                   <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group xs:col-span-2 lg:col-span-1 w-full text-left flex flex-col items-center">
                     <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
@@ -163,31 +173,37 @@ export default async function Dashboard() {
               <>
                 <Link href="/properties/add" passHref legacyBehavior>
                   <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center">
-                    <Home className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
-                    <div className="text-slate-200 font-semibold text-sm sm:text-base">Add Property</div>
-                    <div className="text-slate-400 text-xs sm:text-sm">Create new listing</div>
+                  <Home className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
+                  <div className="text-slate-200 font-semibold text-sm sm:text-base">Add Property</div>
+                  <div className="text-slate-400 text-xs sm:text-sm">Create new listing</div>
                   </button>
                 </Link>
-                <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
+                <Link href="/">
+                  <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center">
                   <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
                   <div className="text-slate-200 font-semibold text-sm sm:text-base">Manage Listings</div>
                   <div className="text-slate-400 text-xs sm:text-sm">Edit or remove properties</div>
-                </button>
-                <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
+                  </button>
+                </Link>
+                <Link href="/applications">
+                  <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center">
                   <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
                   <div className="text-slate-200 font-semibold text-sm sm:text-base">Applications</div>
                   <div className="text-slate-400 text-xs sm:text-sm">Review received applications</div>
-                </button>
-                <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
+                  </button>
+                </Link>
+                <Link href="/dashboard/analytics" passHref legacyBehavior>
+                  <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center">
                   <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
                   <div className="text-slate-200 font-semibold text-sm sm:text-base">Analytics</div>
                   <div className="text-slate-400 text-xs sm:text-sm">View performance reports</div>
-                </button>
+                  </button>
+                </Link>
                 <Link href="/dashboard/settings" passHref legacyBehavior>
                   <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center">
-                    <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
-                    <div className="text-slate-200 font-semibold text-sm sm:text-base">Settings</div>
-                    <div className="text-slate-400 text-xs sm:text-sm">Manage account</div>
+                  <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
+                  <div className="text-slate-200 font-semibold text-sm sm:text-base">Settings</div>
+                  <div className="text-slate-400 text-xs sm:text-sm">Manage account</div>
                   </button>
                 </Link>
               </>
