@@ -80,6 +80,7 @@ model Listing {
   agent       User?     @relation("AgentProperties", fields: [agentId], references: [id])
   agentId     String?
   favorites   Favorite[]
+  views       Int       @default(0)
 }
 
 model Booking {

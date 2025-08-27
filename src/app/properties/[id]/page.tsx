@@ -38,7 +38,7 @@ export default async function PropertyDetailPage(context: { params: { id: string
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-4">{property.title}</h1>
+  <h1 className="text-3xl font-bold mb-4 text-slate-900">{property.title}</h1>
       <div className="flex flex-col md:flex-row gap-8">
         {/* Images */}
         <div className="flex-1">
@@ -62,36 +62,36 @@ export default async function PropertyDetailPage(context: { params: { id: string
         </div>
         {/* Details */}
         <div className="flex-1 space-y-4">
-          <div className="flex items-center gap-2 text-blue-700">
+      <div className="flex items-center gap-2 text-slate-800">
             <MapPin className="w-5 h-5" />
             <span>{property.location}</span>
           </div>
-          <div className="flex items-center gap-2 text-blue-700">
+      <div className="flex items-center gap-2 text-slate-800">
             <DollarSign className="w-5 h-5" />
             <span className="font-bold text-lg">KES {property.price}</span>
           </div>
           <div>
-            <div className="font-semibold text-blue-900 mb-1">Description</div>
-            <p className="text-blue-800">{property.description}</p>
+            <div className="font-semibold text-slate-900 mb-1">Description</div>
+            <p className="text-slate-800">{property.description}</p>
           </div>
           <div>
-            <div className="font-semibold text-blue-900 mb-1">Agent</div>
-            <div className="flex items-center gap-2 text-blue-700">
+            <div className="font-semibold text-slate-900 mb-1">Agent</div>
+            <div className="flex items-center gap-2 text-slate-800">
               <User className="w-4 h-4" />
               <span>{property.agent?.name || property.agent?.email || "N/A"}</span>
             </div>
           </div>
           <div>
-            <div className="font-semibold text-blue-900 mb-1">Landlord</div>
-            <div className="flex items-center gap-2 text-green-700">
+            <div className="font-semibold text-slate-900 mb-1">Landlord</div>
+            <div className="flex items-center gap-2 text-slate-800">
               <Home className="w-4 h-4" />
               <span>{property.owner?.name || property.owner?.email || "N/A"}</span>
             </div>
           </div>
           {/* Amenities placeholder */}
           <div>
-            <div className="font-semibold text-blue-900 mb-1">Amenities</div>
-            <ul className="list-disc list-inside text-blue-800">
+            <div className="font-semibold text-slate-900 mb-1">Amenities</div>
+            <ul className="list-disc list-inside text-slate-800">
               <li>24/7 Security</li>
               <li>Parking</li>
               <li>Wi-Fi</li>
@@ -108,17 +108,17 @@ export default async function PropertyDetailPage(context: { params: { id: string
           Reviews ({property.reviews.length})
         </h2>
         {property.reviews.length === 0 ? (
-          <p className="text-blue-700">No reviews yet.</p>
+          <p className="text-slate-700">No reviews yet.</p>
         ) : (
           <div className="space-y-4">
             {property.reviews.map((review: any) => (
-              <div key={review.id} className="bg-blue-50 p-4 rounded-xl shadow-sm">
+              <div key={review.id} className="bg-slate-50 p-4 rounded-xl shadow-sm">
                 <div className="flex items-center gap-2 mb-1">
-                  <User className="w-4 h-4 text-blue-600" />
-                  <span className="font-semibold text-blue-800">{review.renter?.name || review.renter?.email || "Anonymous"}</span>
+                  <User className="w-4 h-4 text-slate-700" />
+                  <span className="font-semibold text-slate-800">{review.renter?.name || review.renter?.email || "Anonymous"}</span>
                   <span className="ml-2 text-yellow-600 font-bold">Rating: {review.rating}/5</span>
                 </div>
-                <div className="text-blue-700">{review.comment}</div>
+                <div className="text-slate-700">{review.comment}</div>
               </div>
             ))}
           </div>
