@@ -43,9 +43,8 @@ export default async function Dashboard() {
                 <span className="text-slate-300 text-sm sm:text-base">Total Listings</span>
                 <span className="text-xl sm:text-2xl font-bold text-slate-100">12</span>
               </div>
-              <button className="w-full mt-4 sm:mt-6 px-4 py-2.5 sm:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-lg sm:rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30 text-sm sm:text-base">
-                View Listings
-              </button>
+              <Link href="/properties">
+              </Link>
             </div>
           </div>
 
@@ -66,9 +65,6 @@ export default async function Dashboard() {
                 <span className="text-xl sm:text-2xl font-bold text-slate-100">8</span>
               </div>
               <Link href="/favorites">
-                <button className="w-full mt-4 sm:mt-6 px-4 py-2.5 sm:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-lg sm:rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30 text-sm sm:text-base">
-                  View Favorites
-                </button>
               </Link>
             </div>
           </div>
@@ -90,9 +86,6 @@ export default async function Dashboard() {
                   <span className="text-slate-300 text-sm sm:text-base">Applications Sent</span>
                   <span className="text-xl sm:text-2xl font-bold text-slate-100">2</span>
                 </div>
-                <button className="w-full mt-4 sm:mt-6 px-4 py-2.5 sm:py-3 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold rounded-lg sm:rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30 text-sm sm:text-base">
-                  View Applications
-                </button>
               </div>
             </div>
           )}
@@ -134,36 +127,36 @@ export default async function Dashboard() {
         {/* Quick Actions */}
         <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-600/30 shadow-lg rounded-2xl sm:rounded-3xl p-6 sm:p-8 mb-6 sm:mb-8">
           <h2 className="text-xl sm:text-2xl font-bold text-slate-100 mb-4 sm:mb-6">Quick Actions</h2>
-          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4">
             {/* Renters: Only show relevant actions */}
             {role === "USER" && (
               <>
-              <Link href="/properties">
-                <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
-                  <Home className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
-                  <div className="text-slate-200 font-semibold text-sm sm:text-base">Browse Properties</div>
-                  <div className="text-slate-400 text-xs sm:text-sm">Find your dream home</div>
-                </button>
-              </Link>
-              <Link href="/favorites">
-                <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
-                  <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
-                  <div className="text-slate-200 font-semibold text-sm sm:text-base">View Favorites</div>
-                  <div className="text-slate-400 text-xs sm:text-sm">Saved properties</div>
-                </button>
-              </Link>
-              <Link href="/applications">
-                <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group">
-                  <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
-                  <div className="text-slate-200 font-semibold text-sm sm:text-base">Applications</div>
-                  <div className="text-slate-400 text-xs sm:text-sm">Sent to agents</div>
-                </button>
-              </Link>
+                <Link href="/properties">
+                  <button className="p-5 sm:p-6 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-2xl sm:rounded-3xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center min-h-[160px]">
+                    <Home className="w-7 h-7 sm:w-9 sm:h-9 text-slate-300 mb-3 sm:mb-4 mx-auto group-hover:scale-110 transition-transform duration-200" />
+                    <div className="text-slate-200 font-semibold text-base sm:text-lg">Browse Properties</div>
+                    <div className="text-slate-400 text-sm sm:text-base">Find your dream home</div>
+                  </button>
+                </Link>
+                <Link href="/favorites">
+                  <button className="p-5 sm:p-6 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-2xl sm:rounded-3xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center min-h-[160px]">
+                    <Heart className="w-7 h-7 sm:w-9 sm:h-9 text-slate-300 mb-3 sm:mb-4 mx-auto group-hover:scale-110 transition-transform duration-200" />
+                    <div className="text-slate-200 font-semibold text-base sm:text-lg">View Favorites</div>
+                    <div className="text-slate-400 text-sm sm:text-base">Saved properties</div>
+                  </button>
+                </Link>
+                <Link href="/applications">
+                  <button className="p-5 sm:p-6 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-2xl sm:rounded-3xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center min-h-[160px]">
+                    <FileText className="w-7 h-7 sm:w-9 sm:h-9 text-slate-300 mb-3 sm:mb-4 mx-auto group-hover:scale-110 transition-transform duration-200" />
+                    <div className="text-slate-200 font-semibold text-base sm:text-lg">Applications</div>
+                    <div className="text-slate-400 text-sm sm:text-base">Sent to agents</div>
+                  </button>
+                </Link>
                 <Link href="/dashboard/settings" passHref legacyBehavior>
-                  <button className="p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl sm:rounded-2xl transition-all duration-200 hover:shadow-lg group xs:col-span-2 lg:col-span-1 w-full text-left flex flex-col items-center">
-                    <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-slate-300 mb-2 sm:mb-3 mx-auto group-hover:scale-110 transition-transform duration-200" />
-                    <div className="text-slate-200 font-semibold text-sm sm:text-base">Settings</div>
-                    <div className="text-slate-400 text-xs sm:text-sm">Manage account</div>
+                  <button className="p-5 sm:p-6 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-2xl sm:rounded-3xl transition-all duration-200 hover:shadow-lg group w-full text-left flex flex-col items-center min-h-[160px]">
+                    <Settings className="w-7 h-7 sm:w-9 sm:h-9 text-slate-300 mb-3 sm:mb-4 mx-auto group-hover:scale-110 transition-transform duration-200" />
+                    <div className="text-slate-200 font-semibold text-base sm:text-lg">Settings</div>
+                    <div className="text-slate-400 text-sm sm:text-base">Manage account</div>
                   </button>
                 </Link>
               </>
