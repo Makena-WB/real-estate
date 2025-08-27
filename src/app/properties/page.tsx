@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { MapPin, DollarSign, User, Star, Home, Eye, Heart } from "lucide-react"
+import Link from "next/link"
 
 export default async function PropertiesPage() {
   type ListingWithRelations = {
@@ -174,9 +175,11 @@ export default async function PropertiesPage() {
                         {listing.reviews.length} {listing.reviews.length === 1 ? "Review" : "Reviews"}
                       </span>
                     </div>
-                    <button className="px-4 py-2 bg-gradient-to-r from-slate-600 to-slate-700 text-white text-sm font-semibold rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30">
-                      View Details
-                    </button>
+                    <Link href={`/properties/${listing.id}`}>
+                      <button className="px-4 py-2 bg-gradient-to-r from-slate-600 to-slate-700 text-white text-sm font-semibold rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-200 hover:shadow-lg border border-slate-500/30">
+                        View Details
+                      </button>
+                    </Link>
                   </div>
                 </CardFooter>
               </Card>
