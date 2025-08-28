@@ -102,7 +102,16 @@ export default async function PropertyDetailPage(context: { params: { id: string
         </div>
       </div>
       {/* Reviews */}
-      <div className="mt-10">
+      {/* Apply Button */}
+      <div className="mt-10 mb-8 flex justify-end">
+        <a href={`/applications/apply?propertyId=${property.id}`}>
+          <button className="px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-xl shadow transition-all duration-200">
+            Apply Now
+          </button>
+        </a>
+      </div>
+      {/* Reviews */}
+      <div>
         <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
           <Star className="w-6 h-6 text-yellow-500" />
           Reviews ({property.reviews.length})
