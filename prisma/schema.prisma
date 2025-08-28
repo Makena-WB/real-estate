@@ -27,6 +27,7 @@ model User {
   propertiesManaged Listing[] @relation("AgentProperties")
   reviews  Review[]  @relation("UserReviews")
   favorites Favorite[]
+  applications Application[]
 }
 
 model Account {
@@ -81,6 +82,7 @@ model Listing {
   agentId     String?
   favorites   Favorite[]
   views       Int       @default(0)
+  applications Application[] // Added opposite relation field
 }
 
 model Booking {
@@ -114,6 +116,19 @@ model Favorite {
   createdAt  DateTime @default(now())
 
   @@unique([userId, listingId])
+
+}
+
+model Application {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  listing    Listing  @relation(fields: [listingId], references: [id])
+  listingId  String
+  type       String   // "rent" or "buy"
+  message    String
+  status     String   @default("PENDING") // e.g., "pending", "approved", "rejected"
+  createdAt  DateTime @default(now())
 }
 
 enum Role {
