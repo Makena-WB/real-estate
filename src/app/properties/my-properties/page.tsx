@@ -137,12 +137,16 @@ export default async function MyPropertiesPage() {
 
                       {/* Action Buttons */}
                       <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                        <button className="p-2 bg-slate-800/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-slate-700 transition-colors duration-200 border border-slate-600/30">
-                          <Eye className="w-4 h-4 text-slate-300" />
-                        </button>
-                        <button className="p-2 bg-slate-800/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-slate-700 transition-colors duration-200 border border-slate-600/30">
-                          <BarChart3 className="w-4 h-4 text-slate-300" />
-                        </button>
+                        <Link href={`/properties/${listing.id}`}>
+                          <button className="p-2 bg-slate-800/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-slate-700 transition-colors duration-200 border border-slate-600/30">
+                            <Eye className="w-4 h-4 text-slate-300" />
+                          </button>
+                        </Link>
+                        <Link href={`/properties/${listing.id}/analytics`}>
+                          <button className="p-2 bg-slate-800/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-slate-700 transition-colors duration-200 border border-slate-600/30">
+                            <BarChart3 className="w-4 h-4 text-slate-300" />
+                          </button>
+                        </Link>
                       </div>
 
                       {/* Price Badge */}
@@ -252,21 +256,27 @@ export default async function MyPropertiesPage() {
                   <div className="text-slate-400 text-sm">Create new listing</div>
                 </button>
               </Link>
-              <button className="w-full p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl transition-all duration-200 hover:shadow-lg group text-left">
-                <BarChart3 className="w-6 h-6 text-slate-300 mb-3 group-hover:scale-110 transition-transform duration-200" />
-                <div className="text-slate-200 font-semibold mb-1">Analytics</div>
-                <div className="text-slate-400 text-sm">View performance</div>
-              </button>
-              <button className="w-full p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl transition-all duration-200 hover:shadow-lg group text-left">
-                <Settings className="w-6 h-6 text-slate-300 mb-3 group-hover:scale-110 transition-transform duration-200" />
-                <div className="text-slate-200 font-semibold mb-1">Bulk Edit</div>
-                <div className="text-slate-400 text-sm">Manage multiple</div>
-              </button>
-              <button className="w-full p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl transition-all duration-200 hover:shadow-lg group text-left">
-                <Eye className="w-6 h-6 text-slate-300 mb-3 group-hover:scale-110 transition-transform duration-200" />
-                <div className="text-slate-200 font-semibold mb-1">Preview</div>
-                <div className="text-slate-400 text-sm">See public view</div>
-              </button>
+              <Link href= "/analytics">
+                <button className="w-full p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl transition-all duration-200 hover:shadow-lg group text-left">
+                  <BarChart3 className="w-6 h-6 text-slate-300 mb-3 group-hover:scale-110 transition-transform duration-200" />
+                  <div className="text-slate-200 font-semibold mb-1">Analytics</div>
+                  <div className="text-slate-400 text-sm">View performance</div>
+                </button>
+              </Link>
+              <Link href="/properties/bulk-edit" className="w-full">
+                <button className="w-full p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl transition-all duration-200 hover:shadow-lg group text-left">
+                  <Settings className="w-6 h-6 text-slate-300 mb-3 group-hover:scale-110 transition-transform duration-200" />
+                  <div className="text-slate-200 font-semibold mb-1">Bulk Edit</div>
+                  <div className="text-slate-400 text-sm">Manage multiple</div>
+                </button>
+              </Link>
+              <Link href = "/properties">
+                <button className="w-full p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600/30 rounded-xl transition-all duration-200 hover:shadow-lg group text-left">
+                  <Eye className="w-6 h-6 text-slate-300 mb-3 group-hover:scale-110 transition-transform duration-200" />
+                  <div className="text-slate-200 font-semibold mb-1">Preview</div>
+                  <div className="text-slate-400 text-sm">See public view</div>
+                </button>
+              </Link>
             </div>
           </div>
         )}
