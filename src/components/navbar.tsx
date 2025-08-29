@@ -128,7 +128,7 @@ export default function Navbar() {
                     <NavigationMenuItem>
                       <NavigationMenuLink asChild>
                         <Link
-                          href="/my-properties"
+                          href="/properties/my-properties"
                           className="px-4 py-2 rounded-lg text-slate-300 font-medium hover:bg-slate-700/50 hover:text-slate-200 transition-all duration-200 text-sm border border-transparent hover:border-slate-600/30"
                         >
                           My Properties
@@ -296,7 +296,7 @@ export default function Navbar() {
                         {/* My Properties Link for Agents/Landlords */}
                         {role && ["AGENT", "LANDLORD"].includes(role) && (
                           <Link
-                            href="/my-properties"
+                            href="/properties/my-properties"
                             onClick={() => setIsOpen(false)}
                             className="flex items-center gap-3 py-3 px-4 rounded-xl text-slate-300 hover:bg-slate-700/50 hover:text-slate-200 transition-all duration-200 font-medium"
                           >
