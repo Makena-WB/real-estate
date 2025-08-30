@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import cloudinary from "@/lib/cloudinary";
 
 // Helper to upload a single file buffer to Cloudinary
+
 async function uploadToCloudinary(file: File) {
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
@@ -20,39 +21,62 @@ async function uploadToCloudinary(file: File) {
 // POST: Add images
 export async function POST(req: Request) {
   const formData = await req.formData();
-  const listingId = formData.get("listingId") as string;
-  const images = formData.getAll("images") as File[];
+  const propertyId = formData.get("propertyId") as string;
+  if (!propertyId) {
+    return NextResponse.json({ error: "Missing propertyId" }, { status: 400 });
+  }
+  const images = formData.getAll("images").filter((f) => f instanceof File) as File[];
+  if (!images.length) {
+    return NextResponse.json({ error: "No images provided" }, { status: 400 });
+  }
 
   // Upload images to Cloudinary
   const uploadedUrls: string[] = [];
   for (const file of images) {
-    const url = await uploadToCloudinary(file);
-    uploadedUrls.push(url);
+    try {
+      const url = await uploadToCloudinary(file);
+      uploadedUrls.push(url);
+    } catch (err: any) {
+      return NextResponse.json({ error: "Cloudinary upload failed", details: err?.message || err }, { status: 500 });
+    }
   }
 
   // Save URLs to DB
-  await prisma.listing.update({
-    where: { id: listingId },
-    data: {
-      images: { push: uploadedUrls }, // Prisma: images is a string[]
-    },
-  });
+  try {
+    await prisma.listing.update({
+      where: { id: propertyId },
+      data: {
+        images: { push: uploadedUrls }, // Prisma: images is a string[]
+      },
+    });
+  } catch (err: any) {
+    return NextResponse.json({ error: "Failed to update listing images", details: err?.message || err }, { status: 500 });
+  }
 
   return NextResponse.json({ success: true, urls: uploadedUrls });
 }
 
 // DELETE: Remove image
 export async function DELETE(req: Request) {
-  const { listingId, imgUrl } = await req.json();
+  const { propertyId, imageUrl } = await req.json();
+  if (!propertyId || !imageUrl) {
+    return NextResponse.json({ error: "Missing propertyId or imageUrl" }, { status: 400 });
+  }
 
   // Remove image URL from listing
-  const listing = await prisma.listing.findUnique({ where: { id: listingId } });
-  const newImages = (listing?.images || []).filter((url: string) => url !== imgUrl);
-
-  await prisma.listing.update({
-    where: { id: listingId },
-    data: { images: newImages },
-  });
+  try {
+    const listing = await prisma.listing.findUnique({ where: { id: propertyId } });
+    if (!listing) {
+      return NextResponse.json({ error: "Listing not found" }, { status: 404 });
+    }
+    const newImages = (listing.images || []).filter((url: string) => url !== imageUrl);
+    await prisma.listing.update({
+      where: { id: propertyId },
+      data: { images: newImages },
+    });
+  } catch (err: any) {
+    return NextResponse.json({ error: "Failed to remove image", details: err?.message || err }, { status: 500 });
+  }
 
   // TODO: Optionally delete image from storage
 

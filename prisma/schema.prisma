@@ -73,6 +73,8 @@ model Listing {
   price       Float
   location    String
   images      String[]
+  bedrooms    Int      @default(0)
+  bathrooms   Int      @default(0)
   owner       User      @relation(fields: [ownerId], references: [id])
   ownerId     String
   bookings    Booking[]
@@ -83,6 +85,21 @@ model Listing {
   favorites   Favorite[]
   views       Int       @default(0)
   applications Application[] // Added opposite relation field
+  amenities   ListingAmenity[]
+}
+
+model Amenity {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  listings  ListingAmenity[]
+}
+
+model ListingAmenity {
+  id         String   @id @default(uuid())
+  listing    Listing  @relation(fields: [listingId], references: [id])
+  listingId  String
+  amenity    Amenity  @relation(fields: [amenityId], references: [id])
+  amenityId  String
 }
 
 model Booking {
