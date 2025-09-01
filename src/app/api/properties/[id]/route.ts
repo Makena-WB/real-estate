@@ -4,6 +4,12 @@ import { requireAuth } from "@/lib/auth-redirect";
 
 export async function GET(request: Request, context: { params: { id: string } }) {
   const params = await context.params;
+  // Increment views
+  await prisma.listing.update({
+    where: { id: params.id },
+    data: { views: { increment: 1 } },
+  });
+  // Fetch property with updated views
   const property = await prisma.listing.findUnique({
     where: { id: params.id },
     include: { agent: true, owner: true, reviews: true },
