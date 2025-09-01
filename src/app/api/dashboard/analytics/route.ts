@@ -18,11 +18,46 @@ export async function GET() {
       ? Math.round(listings.reduce((sum, l) => sum + (l.price || 0), 0) / totalListings)
       : 0;
 
+  // Recent activity: today
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Views: count of PropertyView records created today
+  const viewsToday = await prisma.propertyView.count({
+    where: {
+      createdAt: {
+        gte: today,
+      },
+    },
+  });
+
+  // Favorites: count of favorites created today
+  const favoritesToday = await prisma.favorite.count({
+    where: {
+      createdAt: {
+        gte: today,
+      },
+    },
+  });
+
+  // Reviews: count of reviews created today
+  const reviewsToday = await prisma.review.count({
+    where: {
+      createdAt: {
+        gte: today,
+      },
+    },
+  });
+
   return NextResponse.json({
     totalListings,
     totalViews,
     totalFavorites,
     totalReviews,
     averagePrice,
+    recentActivity: [
+      { date: "Today", views: viewsToday, favorites: favoritesToday, reviews: reviewsToday },
+      // You can add more periods (week, month) if needed
+    ],
   });
 }

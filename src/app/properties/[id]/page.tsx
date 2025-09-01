@@ -21,6 +21,7 @@ import {
   Eye,
 } from "lucide-react"
 import Link from "next/link"
+import PropertyViewTracker from "@/components/PropertyViewTracker"
 
 export default async function PropertyDetailPage(context: { params: { id: string } }) {
   const { params } = await context
@@ -77,6 +78,7 @@ export default async function PropertyDetailPage(context: { params: { id: string
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-800 via-slate-700 to-slate-600">
+      <PropertyViewTracker propertyId={property.id} />
       <div className="max-w-7xl mx-auto py-6 sm:py-8 lg:py-12 px-4 sm:px-6 lg:px-8">
         {/* Back Navigation */}
         <Link

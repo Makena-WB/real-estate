@@ -28,6 +28,7 @@ model User {
   reviews  Review[]  @relation("UserReviews")
   favorites Favorite[]
   applications Application[]
+  propertyViews PropertyView[]
 }
 
 model Account {
@@ -86,6 +87,15 @@ model Listing {
   views       Int       @default(0)
   applications Application[] // Added opposite relation field
   amenities   ListingAmenity[]
+  propertyViews PropertyView[]
+}
+model PropertyView {
+  id         String   @id @default(uuid())
+  listing    Listing  @relation(fields: [listingId], references: [id])
+  listingId  String
+  user       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+  createdAt  DateTime @default(now())
 }
 
 model Amenity {

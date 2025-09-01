@@ -47,6 +47,7 @@ type AnalyticsStats = {
     date: string
     views: number
     favorites: number
+    reviews: number
   }>
 }
 
@@ -559,42 +560,46 @@ export default function AnalyticsPage() {
               <h2 className="text-xl font-bold text-slate-100">Recent Activity</h2>
             </div>
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
-                    <Eye className="w-4 h-4 text-blue-400" />
+              {stats.recentActivity?.map((activity, idx) => (
+                <div key={idx}>
+                  <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
+                        <Eye className="w-4 h-4 text-blue-400" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-slate-200">Property Views</div>
+                        <div className="text-xs text-slate-400">{activity.date}</div>
+                      </div>
+                    </div>
+                    <div className="text-lg font-bold text-slate-100">{activity.views ?? 0}</div>
                   </div>
-                  <div>
-                    <div className="text-sm font-medium text-slate-200">Property Views</div>
-                    <div className="text-xs text-slate-400">Today</div>
+                  <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-red-500/20 rounded-full flex items-center justify-center">
+                        <Heart className="w-4 h-4 text-red-400" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-slate-200">New Favorites</div>
+                        <div className="text-xs text-slate-400">{activity.date}</div>
+                      </div>
+                    </div>
+                    <div className="text-lg font-bold text-slate-100">{activity.favorites ?? 0}</div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
+                        <Star className="w-4 h-4 text-green-400" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-slate-200">New Reviews</div>
+                        <div className="text-xs text-slate-400">{activity.date}</div>
+                      </div>
+                    </div>
+                    <div className="text-lg font-bold text-slate-100">{activity.reviews ?? 0}</div>
                   </div>
                 </div>
-                <div className="text-lg font-bold text-slate-100">+47</div>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-red-500/20 rounded-full flex items-center justify-center">
-                    <Heart className="w-4 h-4 text-red-400" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-medium text-slate-200">New Favorites</div>
-                    <div className="text-xs text-slate-400">Today</div>
-                  </div>
-                </div>
-                <div className="text-lg font-bold text-slate-100">+12</div>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-slate-700/30 rounded-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
-                    <Star className="w-4 h-4 text-green-400" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-medium text-slate-200">New Reviews</div>
-                    <div className="text-xs text-slate-400">This week</div>
-                  </div>
-                </div>
-                <div className="text-lg font-bold text-slate-100">+3</div>
-              </div>
+            ))}
             </div>
           </div>
         </div>
